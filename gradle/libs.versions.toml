@@ -1,0 +1,27 @@
+[versions]
+# Same AGP/Kotlin as consumer apps: the library is compiled with Kotlin 2.0, so any app on
+# Kotlin >= 2.0 can read its metadata. Raise only when every consumer app has moved.
+agp = "8.7.3"
+kotlin = "2.0.21"
+# Plain Java artifact on purpose: billing-ktx 9.x pulls kotlin-stdlib 2.2, which apps on
+# Kotlin 2.0 cannot compile against. Suspend wrappers live inside :iap instead.
+billing = "9.1.0"
+kotlinxCoroutines = "1.9.0"
+coreKtx = "1.15.0"
+appcompat = "1.7.0"
+lifecycle = "2.8.7"
+junit = "4.13.2"
+
+[libraries]
+billing = { group = "com.android.billingclient", name = "billing", version.ref = "billing" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

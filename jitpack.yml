@@ -1,0 +1,4 @@
+# JitPack runs: ./gradlew clean -Pgroup=com.github.<user> -Pversion=<tag> -xtest assemble publishToMavenLocal
+# Only :iap and :iap-testing apply maven-publish, so :sample is never published.
+jdk:
+  - openjdk17
