@@ -41,8 +41,8 @@ dependencyResolutionManagement {
 
 // app/build.gradle.kts
 dependencies {
-    implementation("com.github.<github-user>.android-iap:iap:<tag>")
-    debugImplementation("com.github.<github-user>.android-iap:iap-testing:<tag>") // FakeIapClient
+    implementation("com.github.susu1009.android-iap:iap:<tag>")
+    debugImplementation("com.github.susu1009.android-iap:iap-testing:<tag>") // FakeIapClient
 }
 ```
 
@@ -63,7 +63,7 @@ dependencies {
 git tag v0.1.0 && git push origin v0.1.0
 ```
 
-Then open `https://jitpack.io/#<github-user>/android-iap` and build the tag. Local check:
+Then open `https://jitpack.io/#susu1009/android-iap` and build the tag. Local check:
 
 ```bash
 ./gradlew :iap:testDebugUnitTest :iap:publishToMavenLocal :iap-testing:publishToMavenLocal
