@@ -60,7 +60,8 @@ public data class IapProduct(
 public data class OneTimeOffer(
     /** Null for the product's default purchase option. */
     val offerId: String?,
-    val offerToken: String,
+    /** Null for legacy one-time products, which need no token to purchase. */
+    val offerToken: String?,
     val formattedPrice: String,
     val priceMicros: Long,
     val currencyCode: String,

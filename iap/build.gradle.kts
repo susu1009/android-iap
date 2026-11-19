@@ -20,6 +20,11 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
 
+    testOptions {
+        // JVM tests construct a bare Activity for launchPurchase; the gateway is faked.
+        unitTests.isReturnDefaultValues = true
+    }
+
     publishing {
         singleVariant("release") { withSourcesJar() }
     }

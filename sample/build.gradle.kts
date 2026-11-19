@@ -10,7 +10,10 @@ android {
     defaultConfig {
         // Real Play purchases need the applicationId of an app uploaded to Play Console
         // (internal track) — override with -PsampleAppId=<id> when testing with license testers.
-        applicationId = providers.gradleProperty("sampleAppId").getOrElse("com.banv.iap.sample")
+        val playAppId = providers.gradleProperty("sampleAppId").orNull
+        applicationId = playAppId ?: "com.banv.iap.sample"
+        // Without a Play Console app id there is nothing to buy from: use FakeIapClient.
+        buildConfigField("boolean", "USE_FAKE_IAP", (playAppId == null).toString())
         minSdk = 23
         targetSdk = 35
         versionCode = 1
@@ -22,6 +25,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
+    buildFeatures { buildConfig = true }
 }
 
 dependencies {

@@ -3,8 +3,29 @@
 Google Play in-app purchases (consumables, non-consumables, subscriptions) behind a small,
 Billing-version-independent Kotlin API. Built on Play Billing 9.1.0, minSdk 23, Kotlin 2.0+.
 
-> Status: 0.1.0-SNAPSHOT — public API only. `GooglePlayIapClient` (the Play implementation)
-> is not written yet; use `FakeIapClient` from `iap-testing` meanwhile.
+> Status: 0.1.0-SNAPSHOT — `GooglePlayIapClient` implemented and unit-tested against a fake
+> gateway; not yet verified against real Play purchases (license testers).
+
+## Usage
+
+```kotlin
+val iap: IapClient = GooglePlayIapClient.Builder(context)
+    .catalog { listOf(ProductSpec("gems_100", ProductType.CONSUMABLE)) }
+    .processor(object : PurchaseProcessor {
+        override suspend fun verify(purchase: IapPurchase) =
+            if (api.verify(purchase.productId, purchase.purchaseToken)) Verification.Valid else Verification.Invalid
+        override suspend fun grant(purchase: IapPurchase) =
+            wallet.creditOnce(purchase.purchaseToken, purchase.productId) // idempotent by token
+    })
+    .build()
+
+// on app start / resume
+iap.restorePurchases()
+
+// in UI
+iap.purchaseEvents.collect { event -> /* Completed / Pending / Cancelled / Failed */ }
+iap.launchPurchase(activity, "gems_100")
+```
 
 ## Install (JitPack)
 
